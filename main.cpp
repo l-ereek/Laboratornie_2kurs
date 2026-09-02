@@ -8,24 +8,7 @@ int main() {
 
     int n = getValidInt("Введите количество поездов (N): ");
     TRAIN* RASP = createArray(n);
-
-    cout << "\nВыберите способ заполнения данных:\n";
-    cout << "1 — Вручную с клавиатуры\n";
-    cout << "2 — Генератором случайных чисел\n";
-    int fillChoice = getValidInt("Ваш выбор (1 или 2): ");
-
-    while (fillChoice != 1 && fillChoice != 2) {
-        cout << "Неверный выбор. ";
-        fillChoice = getValidInt("Введите 1 или 2: ");
-    }
-
-    if (fillChoice == 1) {
-        fillArrayInteractive(RASP, n);
-    }
-    else {
-        fillArrayRandom(RASP, n);
-    }
-
+    rasp(RASP, n);
     // Сортировка по возрастанию номера поезда по заданию
     sortTrainsByNumber(RASP, n);
 

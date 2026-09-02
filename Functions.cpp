@@ -1,16 +1,25 @@
-#include "Header.h"
+﻿#include "Header.h"
 
-int getValidInt(const string& prompt) {
+void chistka()
+{
+    cin.clear();
+    cin.ignore(1000, '\n');
+}
+
+int getValidInt(const string& prompt)
+{
     int value;
-    while (true) {
+    while (true)
+    {
         cout << prompt;
-        if (cin >> value && value > 0) {
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            return value;
+        cin >> value;
+        if (cin >> value && value > 0)
+        {
+            chistka();
+            cout << "Ошибка! Введите корректное положительное целое число.\n";
         }
-        cout << "Ошибка! Введите корректное положительное целое число.\n";
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        else
+            return value;
     }
 }
 
@@ -22,6 +31,7 @@ string getValidString(const string& prompt) {
         if (!value.empty()) {
             return value;
         }
+        chistka();
         cout << "Ошибка! Строка не должна быть пустой.\n";
     }
 }
@@ -30,31 +40,30 @@ TRAIN* createArray(int size) {
     return new TRAIN[size];
 }
 
-void fillArrayInteractive(TRAIN* trainArray, int size) {
-    for (int i = 0; i < size; ++i) {
+void rasp(TRAIN* trainArray, int size)
+{
+    for (int i = 0; i < size; ++i)
+    {
         cout << "\n--- Ввод данных для поезда №" << i + 1 << " ---\n";
         trainArray[i].NAZN = getValidString("Введите пункт назначения: ");
         trainArray[i].NUMR = getValidInt("Введите номер поезда: ");
-        trainArray[i].TIME = getValidString("Введите время отправления (ЧЧ:ММ): ");
+        while (true)
+        {
+            int hour = getValidInt("Введите время отправления (час): ");
+            if (trainArray[i].TIME > 24 || trainArray[i].TIME < 0)
+            {
+                cout << "Ошибка. Час не может превышать 23 или быть отрицательным.";
+                chistka();
+            }
+            else
+            {
+                trainArray[i].TIME = hour;
+                break;
+            }
+        }
     }
 }
 
-void fillArrayRandom(TRAIN* trainArray, int size) {
-    string cities[] = { "Москва", "Санкт-Петербург", "Ростов-на-Дону", "Краснодар", "Сочи", "Казань" };
-    int citiesCount = 6;
-
-    for (int i = 0; i < size; ++i) {
-        trainArray[i].NAZN = cities[rand() % citiesCount];
-        trainArray[i].NUMR = rand() % 900 + 100; // Номер от 100 до 999
-
-        int hours = rand() % 24;
-        int minutes = rand() % 60;
-        char timeBuf[6];
-        snprintf(timeBuf, sizeof(timeBuf), "%02d:%02d", hours, minutes);
-        trainArray[i].TIME = timeBuf;
-    }
-    cout << "\n[Массив успешно заполнен случайными данными]\n";
-}
 
 void printArray(const TRAIN* trainArray, int size) {
     cout << "\n================ РАСПИСАНИЕ ПОЕЗДОВ ================\n";
