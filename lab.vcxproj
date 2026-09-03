@@ -139,8 +139,10 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="func.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Functions.cpp" />
+    <ClCompile Include="Recursia.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header.h" />
