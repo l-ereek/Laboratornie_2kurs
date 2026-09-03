@@ -1,101 +1,90 @@
-ï»¿#include "Header.h"
+#include "Header.h"
 
-void chistka()
-{
+void chistka() {
     cin.clear();
     cin.ignore(1000, '\n');
 }
 
-int getValidInt(const string& prompt)
-{
-    int value;
-    while (true)
-    {
-        cout << prompt;
-        cin >> value;
-        if (cin >> value && value > 0)
-        {
-            chistka();
-            cout << "ÐžÑˆÐ¸Ð±ÐºÐ°! Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ð¾Ðµ Ð¿Ð¾Ð»Ð¾Ð¶Ð¸Ñ‚ÐµÐ»ÑŒÐ½Ð¾Ðµ Ñ†ÐµÐ»Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾.\n";
-        }
-        else
-            return value;
-    }
-}
-
-string getValidString(const string& prompt) {
-    string value;
+int ProvInt(const string& prompt) {
+    int ch;
     while (true) {
         cout << prompt;
-        getline(cin, value);
-        if (!value.empty()) {
-            return value;
+        if (cin >> ch && ch >= 0) {
+            cin.ignore(1000, '\n');
+            return ch;
         }
+        cout << "Îøèáêà! Ââåäèòå êîððåêòíîå ÷èñëî .\n";
         chistka();
-        cout << "ÐžÑˆÐ¸Ð±ÐºÐ°! Ð¡Ñ‚Ñ€Ð¾ÐºÐ° Ð½Ðµ Ð´Ð¾Ð»Ð¶Ð½Ð° Ð±Ñ‹Ñ‚ÑŒ Ð¿ÑƒÑÑ‚Ð¾Ð¹.\n";
     }
 }
 
-TRAIN* createArray(int size) {
+string ProvString(const string& vivod)
+{
+    string n;
+    while (true)
+    {
+        cout << vivod;
+        getline(cin, n);
+        if (!n.empty() && none_of(n.begin(), n.end(), ::isdigit))
+            return n;
+        cout << "Îøèáêà! Ââîäèìûå äàííûå íå äîëæíû ñîäåðæàòü öèôðû è íå ìîãóò áûòü ïóñòûìè.\n";
+    }
+}
+
+TRAIN* createArray(int size)
+{
     return new TRAIN[size];
 }
 
-void rasp(TRAIN* trainArray, int size)
+void table(TRAIN* trainArray, int size)
 {
     for (int i = 0; i < size; ++i)
     {
-        cout << "\n--- Ð’Ð²Ð¾Ð´ Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð´Ð»Ñ Ð¿Ð¾ÐµÐ·Ð´Ð° â„–" << i + 1 << " ---\n";
-        trainArray[i].NAZN = getValidString("Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¿ÑƒÐ½ÐºÑ‚ Ð½Ð°Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ñ: ");
-        trainArray[i].NUMR = getValidInt("Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð¾Ð¼ÐµÑ€ Ð¿Ð¾ÐµÐ·Ð´Ð°: ");
+        cout << "Ââîä äàííûõ äëÿ ïîåçäà ¹" << i + 1 << endl;
+        trainArray[i].NAZN = ProvString("Ââåäèòå ïóíêò íàçíà÷åíèÿ: ");
+        trainArray[i].NUMR = ProvInt("Ââåäèòå íîìåð ïîåçäà: ");
+
         while (true)
         {
-            int hour = getValidInt("Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð²Ñ€ÐµÐ¼Ñ Ð¾Ñ‚Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ñ (Ñ‡Ð°Ñ): ");
-            if (trainArray[i].TIME > 24 || trainArray[i].TIME < 0)
+            int hours = ProvInt("Ââåäèòå âðåìÿ îòïðàâëåíèÿ (÷àñ 1-24): ");
+            if (hours >= 1 && hours <= 24)
             {
-                cout << "ÐžÑˆÐ¸Ð±ÐºÐ°. Ð§Ð°Ñ Ð½Ðµ Ð¼Ð¾Ð¶ÐµÑ‚ Ð¿Ñ€ÐµÐ²Ñ‹ÑˆÐ°Ñ‚ÑŒ 23 Ð¸Ð»Ð¸ Ð±Ñ‹Ñ‚ÑŒ Ð¾Ñ‚Ñ€Ð¸Ñ†Ð°Ñ‚ÐµÐ»ÑŒÐ½Ñ‹Ð¼.";
-                chistka();
+                trainArray[i].TIME = hours;
+                break; 
             }
-            else
-            {
-                trainArray[i].TIME = hour;
-                break;
-            }
+            cout << "Îøèáêà! ×àñ îòïðàâëåíèÿ äîëæåí áûòü îò 1 äî 24.\n";
         }
     }
 }
 
-
 void printArray(const TRAIN* trainArray, int size) {
-    cout << "\n================ Ð ÐÐ¡ÐŸÐ˜Ð¡ÐÐÐ˜Ð• ÐŸÐžÐ•Ð—Ð”ÐžÐ’ ================\n";
-    cout << "ÐÐ¾Ð¼ÐµÑ€\t| ÐÐ°Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ\t\t| Ð’Ñ€ÐµÐ¼Ñ Ð¾Ñ‚Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ñ\n";
-    cout << "----------------------------------------------------\n";
-    for (int i = 0; i < size; ++i) {
-        cout << trainArray[i].NUMR << "\t| "
-            << trainArray[i].NAZN << (trainArray[i].NAZN.length() < 8 ? "\t\t| " : "\t| ")
-            << trainArray[i].TIME << "\n";
+    cout << "ÐÀÑÏÈÑÀÍÈÅ ÏÎÅÇÄÎÂ" << endl;
+    for (int i = 0; i < size; ++i)
+    {
+        cout << "\nÍîìåð: " << trainArray[i].NUMR << endl;
+        cout << "Íàçíà÷åíèå: " << trainArray[i].NAZN << endl;
+        cout << "Âðåìÿ îòïðàâëåíèÿ: " << trainArray[i].TIME << endl << endl;
     }
-    cout << "====================================================\n";
 }
 
-void sortTrainsByNumber(TRAIN* trainArray, int size) {
-    sort(trainArray, trainArray + size, [](const TRAIN& a, const TRAIN& b) {
-        return a.NUMR < b.NUMR;
-        });
+void sortTrainByNumber(TRAIN* trainArray, int size)
+{
+    
 }
 
 void findTrainByNumber(const TRAIN* trainArray, int size, int searchNum) {
     bool found = false;
     for (int i = 0; i < size; ++i) {
         if (trainArray[i].NUMR == searchNum) {
-            cout << "\n[Ð˜Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸Ñ Ð¾ Ð¿Ð¾ÐµÐ·Ð´Ðµ Ð½Ð°Ð¹Ð´ÐµÐ½Ð°]:\n";
-            cout << "ÐÐ¾Ð¼ÐµÑ€ Ð¿Ð¾ÐµÐ·Ð´Ð°: " << trainArray[i].NUMR << "\n";
-            cout << "ÐŸÑƒÐ½ÐºÑ‚ Ð½Ð°Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ñ: " << trainArray[i].NAZN << "\n";
-            cout << "Ð’Ñ€ÐµÐ¼Ñ Ð¾Ñ‚Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ñ: " << trainArray[i].TIME << "\n";
+            cout << "Èíôîðìàöèÿ î ïîåçäå íàéäåíà: " << endl;
+            cout << "Íîìåð ïîåçäà: " << trainArray[i].NUMR << endl;
+            cout << "Ïóíêò íàçíà÷åíèÿ: " << trainArray[i].NAZN << endl;
+            cout << "Âðåìÿ îòïðàâëåíèÿ â: " << trainArray[i].TIME << "÷" << endl;
             found = true;
             break;
         }
     }
     if (!found) {
-        cout << "\nÐŸÐ¾ÐµÐ·Ð´ Ñ Ð½Ð¾Ð¼ÐµÑ€Ð¾Ð¼ " << searchNum << " Ð½Ðµ Ð½Ð°Ð¹Ð´ÐµÐ½ Ð² Ñ€Ð°ÑÐ¿Ð¸ÑÐ°Ð½Ð¸Ð¸.\n";
+        cout << "Ïîåçä ñ íîìåðîì " << searchNum << " íå íàéäåí â ðàñïèñàíèè.";
     }
 }

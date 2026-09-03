@@ -1,23 +1,24 @@
-﻿#include "Header.h"
+#include "Header.h"
 
 int main() {
-    setlocale(LC_ALL, "Russian");
+    setlocale(LC_ALL, "RU");
+    system("chcp 1251");
     srand(static_cast<unsigned int>(time(nullptr)));
 
-    cout << "=== Программа учета движения поездов (Вариант 19) ===\n";
+    cout << "������� 19 (������)" << endl;
 
-    int n = getValidInt("Введите количество поездов (N): ");
+    int n = ProvInt("������� ���������� ������� (N): ");
+    
     TRAIN* RASP = createArray(n);
-    rasp(RASP, n);
-    // Сортировка по возрастанию номера поезда по заданию
-    sortTrainsByNumber(RASP, n);
+   
+    table(RASP, n);
 
-    // Вывод отсортированного списка
-    cout << "\nДанные упорядочены по номеру поезда:";
+    sortTrainByNumber(RASP, n);
+
+    cout << "\n������ ����������� �� ������ ������:" << endl;
     printArray(RASP, n);
 
-    // Поиск поезда
-    int searchNum = getValidInt("\nВведите номер поезда для поиска: ");
+    int searchNum = ProvInt("������� ����� ������ ��� ������: ");
     findTrainByNumber(RASP, n, searchNum);
 
     delete[] RASP;

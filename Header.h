@@ -1,4 +1,4 @@
-﻿#ifndef HEADER_H
+#ifndef HEADER_H
 #define HEADER_H
 
 #include <iostream>
@@ -11,19 +11,18 @@
 using namespace std;
 
 struct TRAIN {
-    string NAZN; 
-    int NUMR;    
+    string NAZN;
+    int NUMR;
     int TIME;
 };
 
-int getValidInt(const string& prompt);
-string getValidString(const string& prompt);
-
+void chistka();
+int ProvInt(const string& prompt);
+string ProvString(const string& prompt);
 TRAIN* createArray(int size);
-void rasp(TRAIN* trainArray, int size);
+void table(TRAIN* trainArray, int size);
 void printArray(const TRAIN* trainArray, int size);
-
-void sortTrainsByNumber(TRAIN* trainArray, int size);
+void sortTrainByNumber(TRAIN* trainArray, int size);
 void findTrainByNumber(const TRAIN* trainArray, int size, int searchNum);
 
 #endif
