@@ -13,12 +13,13 @@
 //struct TRAIN {
 //    string NAZN;
 //    int NUMR;
-//    int TIME;
+//    string TIME;
 //};
 //
 //void chistka();
-//int ProvInt(const string& prompt);
-//string ProvString(const string& prompt);
+//int ProvInt(const string& vivod);
+//string ProvString(const string& vivod);
+//string ProvTime(const string& vivod);
 //TRAIN* createArray(int size);
 //void table(TRAIN* trainArray, int size);
 //void printArray(const TRAIN* trainArray, int size);

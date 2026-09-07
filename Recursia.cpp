@@ -4,32 +4,35 @@
 //#include <string>
 //
 //using namespace std;
+//void chistka()
+//{
+//    cin.clear();
+//    cin.ignore(1000, '\n');
+//}
 //
 //int ProvInt(const string& vivod)
 //{
-//    int value;
+//    int ch;
 //    while (true)
 //    {
 //        cout << vivod;
-//        if (cin >> value)
-//            return value;
-//        cout << "Ошибка ввода! Введите целое число.\n";
-//        cin.clear();
-//        cin.ignore(1000, '\n');
+//        if (cin >> ch)
+//            return ch;
+//        chistka();
+//        cout << "Ошибка ввода! Введите целое число." << endl;
 //    }
 //}
 //
 //double ProvDouble(const string& vivod)
 //{
-//    double value;
+//    double ch;
 //    while (true)
 //    {
 //        cout << vivod;
-//        if (cin >> value)
-//            return value;
-//        cout << "Ошибка ввода! Введите вещественное число.\n";
-//        cin.clear();
-//        cin.ignore(1000, '\n');
+//        if (cin >> ch)
+//            return ch;
+//        chistka();
+//        cout << "Ошибка ввода! Введите вещественное число." << endl;
 //    }
 //}
 //
@@ -39,7 +42,7 @@
 //    if (N == 0)
 //        return 1.0;
 //    double prevY = RootK(X, K, N - 1);
-//    return prevY - (prevY - X / pow(prevY, K - 1)) / K;
+//    return prevY - (prevY - (X / pow(prevY, K - 1)) / K);
 //}
 //
 //int main()
@@ -51,7 +54,7 @@
 //    {
 //        X = ProvDouble("Введите X (> 0): ");
 //        if (X <= 0)
-//           cout << "Число X должно быть больше 0!\n";
+//           cout << "Число X должно быть больше 0!" << endl;
 //    }
 //    while (X <= 0);
 //
@@ -60,10 +63,12 @@
 //    {
 //        K = ProvInt("Введите степень корня K (> 1): ");
 //        if (K <= 1)
-//            cout << "Степень K должна быть больше 1!\n";
+//            cout << "Степень K должна быть больше 1!" << endl;
 //    } 
 //    while (K <= 1);
-//    cout << "\nВведите 6 различных значений N (> 0):\n";
+//
+//    cout << "Введите 6 различных значений N (> 0):" << endl;
+//
 //    for (int i = 0; i < 6; ++i)
 //    {
 //        int N;
@@ -71,11 +76,11 @@
 //        {
 //            N = ProvInt("N " + to_string(i + 1) + ": ");
 //            if (N <= 0)
-//                cout << "Значение N должно быть больше 0!\n";
+//                cout << "Значение N должно быть больше 0!" << endl;
 //        }
 //        while (N <= 0);
 //        double ans = RootK(X, K, N);
-//        cout << "При N = " << N << " корень степени " << K << " из " << X << " ≈ " << ans << "\n";
+//        cout << "При N = " << N << " корень степени " << K << " из " << X << " ≈ " << ans << endl;
 //    }
 //    return 0;
 //}

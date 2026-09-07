@@ -4,25 +4,27 @@
 //#include <cstdlib>
 //
 //using namespace std;
-//int readInt(const string& vivod)
+//int ProvInt(const string& vivod)
 //{
-//    int value;
+//    int ch;
 //    while (true)
 //    {
 //        cout << vivod;
-//        if (cin >> value)
-//            return value;
+//        if (cin >> ch)
+//            return ch;
 //        cin.clear();
 //        cin.ignore(1000, '\n');
-//        cout << "Ошибка ввода! Введите целое число.\n";
+//        cout << "Ошибка ввода! Введите целое число." << endl;
 //    }
 //}
 //
 //bool IsPrime(int N)
 //{
-//    if (N <= 1) return false;
+//    if (N <= 1)
+//        return false;
 //    for (int i = 2; i * i <= N; ++i)
-//        if (N % i == 0) return false;
+//        if (N % i == 0)
+//            return false;
 //    return true;
 //}
 //
@@ -41,9 +43,9 @@
 //    {
 //        do
 //        {
-//            n[i] = readInt("Число " + to_string(i + 1) + ": ");
+//            n[i] = ProvInt("Число " + to_string( i + 1) + ": ");
 //            if (n[i] <= 1)
-//                cout << "Ошибка! Число должно быть строго больше 1." << endl;
+//                cout << "Ошибка! Число должно быть строго больше 1" << endl;
 //        }
 //        while (n[i] <= 1);
 //
@@ -51,6 +53,6 @@
 //            cnt++;
 //    }
 //
-//    cout << "\nРезультат: количество простых чисел = " << cnt;
+//    cout << "Результат: количество простых чисел = " << cnt;
 //    return 0;
 //}
