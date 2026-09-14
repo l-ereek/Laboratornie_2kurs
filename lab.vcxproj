@@ -139,13 +139,11 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="func.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Functions.cpp" />
-    <ClCompile Include="Recursia.cpp" />
+    <ClCompile Include="Movie.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Header.h" />
+    <ClInclude Include="Movie.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
