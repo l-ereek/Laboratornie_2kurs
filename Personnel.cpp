@@ -1,17 +1,7 @@
 ﻿#include "Personnel.h"
-#include <string>
-
-using namespace std;
 
 int Personnel::cnt = 0;
 
-Personnel::Personnel() {
-    name = new char[12];
-    strcpy(name, "Неизвестный");
-    num = 0;
-    rank = 0;
-    cnt++;
-}
 
 Personnel::Personnel(const char* N, int n, int rnk) {
     if (N && strlen(N) > 0) {
@@ -32,8 +22,7 @@ Personnel::~Personnel() {
     cnt--;
 }
 
-Personnel* Personnel::addEmployee(const char* N, int n, int rnk) {return new Personnel(N, n, rnk);
-}
+Personnel* Personnel::addEmployee(const char* N, int n, int rnk) { return new Personnel(N, n, rnk);}
 
 void Personnel::removeEmployee(Personnel*& emp) {
     if (emp) {
@@ -42,14 +31,15 @@ void Personnel::removeEmployee(Personnel*& emp) {
     }
 }
 
-int Personnel::getObjectCount() { return cnt;}
+int Personnel::getObjectCount() {return cnt;}
+
 void printPersonnelDetails(const Personnel& emp) {
-    cout << "[Информация] Сотрудник: " << emp.name
-        << " | Цех №: " << emp.num
-        << " | Разряд: " << emp.rank << endl;
+    cout << "Сотрудник: " << emp.name
+        << " Цех №: " << emp.num
+        << " Разряд: " << emp.rank << endl;
 }
 
-Personnel* createPersonnelExternal(const char* N, int n, int rnk) { return new Personnel(N, n, rnk);}
+Personnel* createPersonnelExternal(const char* N, int n, int rnk) {return new Personnel(N, n, rnk);}
 
 void destroyPersonnelExternal(Personnel*& emp) {
     if (emp) {
@@ -71,7 +61,7 @@ int ProvInt(const string& vivod, int minCh, int maxCh) {
             chistka();
             return ch;
         }
-        cout << "Ошибка ввода! Введите целое число в диапазоне от " << minCh << " до " << maxCh << endl;
+        cout << "Ошибка ввода! Введите целое число от " << minCh << " до " << maxCh << endl;
         chistka();
     }
 }
