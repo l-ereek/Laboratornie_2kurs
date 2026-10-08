@@ -1,52 +1,32 @@
+﻿#define _CRT_SECURE_NO_WARNINGS
 #ifndef PERSONNEL_H
 #define PERSONNEL_H
 
 #include <iostream>
 #include <cstring>
-#include <vector>
-
-using namespace std;
 
 class Personnel {
 private:
-    char* name;       
-    int workshopNum;   
-    int category;      
+    char* name;
+    int num;
+    int rank;        
 
-    static int objectCount; 
-
+    static int cnt;
     Personnel();
-    Personnel(const char* n, int w, int c);
-    Personnel(const Personnel& other);
+    Personnel(const char* N, int n, int rnk);
     ~Personnel();
 
 public:
-    const char* getName() const;
-    int getWorkshopNum() const;
-    int getCategory() const;
-
-    void setName(const char* n);
-    void setWorkshopNum(int w);
-    void setCategory(int c);
-
-    void printInfo() const;
-
+    static Personnel* addEmployee(const char* N, int n, int rnk);
+    static void removeEmployee(Personnel*& emp);
     static int getObjectCount();
-
-    static Personnel* createObject(const char* n, int w, int c);
-    static void destroyObject(Personnel* obj);
-
-    friend Personnel* createPersonnelFriend(const char* n, int w, int c);
-    friend void destroyPersonnelFriend(Personnel* obj);
-    friend void showPrivateData(const Personnel& p);
+    friend void printPersonnelDetails(const Personnel& emp);
+    friend Personnel* createPersonnelExternal(const char* N, int n, int rnk);
+    friend void destroyPersonnelExternal(Personnel*& emp);
 };
 
 void chistka();
-int ProvInt(const string& vivod, int minCh = 0, int maxCh = 10000);
+int ProvInt(const string& vivod, int minCh, int maxCh);
+double ProvDouble(const string& vivod, double minCh, double maxCh);
 string ProvString(const string& vivod);
-
-void addEmployee(vector<Personnel*>& staff);
-void removeEmployee(vector<Personnel*>& staff);
-void printAllEmployees(const vector<Personnel*>& staff);
-
 #endif

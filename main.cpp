@@ -1,75 +1,137 @@
+ï»¿#include <iostream>
+#include <limits>
+#include <string>
 #include "Personnel.h"
 
-void testStaticAndFriends() {
-    cout << "\n==========================================" << endl;
-    cout << "   ÒÅÑÒÈÐÎÂÀÍÈÅ ÑÒÀÒÈÊÈ È ÄÐÓÆÅÑÒÂÅÍÍÎÑÒÈ   " << endl;
-    cout << "==========================================" << endl;
+using namespace std;
 
-    cout << "1. Îáúåêòîâ ïðè âõîäå â òåñòû: " << Personnel::getObjectCount() << endl;
-
-    Personnel* staticArray[2];
-    staticArray[0] = Personnel::createObject("Èâàíîâ È.È.", 1, 3);
-    staticArray[1] = Personnel::createObject("Ïåòðîâ Ï.Ï.", 2, 4);
-    cout << "2. Ïîñëå ñîçäàíèÿ ñòàòè÷åñêîãî ìàññèâà îáúåêòîâ: " << Personnel::getObjectCount() << endl;
-
-    Personnel* dynObj = createPersonnelFriend("Ñèäîðîâ Ñ.Ñ.", 3, 5);
-    cout << "3. Ïîñëå äèíàìè÷åñêîãî ñîçäàíèÿ îáúåêòà (friend): " << Personnel::getObjectCount() << endl;
-
-    showPrivateData(*dynObj);
-
-    destroyPersonnelFriend(dynObj);
-    cout << "4. Ïîñëå óäàëåíèÿ äèíàìè÷åñêîãî îáúåêòà: " << Personnel::getObjectCount() << endl;
-
-    Personnel::destroyObject(staticArray[0]);
-    Personnel::destroyObject(staticArray[1]);
-    cout << "5. Ïîñëå î÷èñòêè ìàññèâà: " << Personnel::getObjectCount() << endl;
-    cout << "==========================================\n" << endl;
-}
 
 int main() {
     setlocale(LC_ALL, "RU");
     system("chcp 1251");
 
-    testStaticAndFriends();
+    int array = ProvInt("Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¼Ð°ÐºÑÐ¸Ð¼Ð°Ð»ÑŒÐ½Ð¾Ðµ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ ÑÐ¾Ñ‚Ñ€ÑƒÐ´Ð½Ð¸ÐºÐ¾Ð² Ð´Ð»Ñ Ð´Ð¸Ð½Ð°Ð¼Ð¸Ñ‡ÐµÑÐºÐ¾Ð³Ð¾ Ð¼Ð°ÑÑÐ¸Ð²Ð°: ", 1, 10);
 
-    vector<Personnel*> staff;
+    if (array <= 0) {
+        cout << "Ð Ð°Ð·Ð¼ÐµÑ€ Ð¼Ð°ÑÑÐ¸Ð²Ð° Ð´Ð¾Ð»Ð¶ÐµÐ½ Ð±Ñ‹Ñ‚ÑŒ Ð±Ð¾Ð»ÑŒÑˆÐµ 0. Ð—Ð°Ð²ÐµÑ€ÑˆÐµÐ½Ð¸Ðµ Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼Ñ‹." << endl;
+        return 0;
+    }
 
-    staff.push_back(Personnel::createObject("Àëåêñååâ À.À.", 1, 4));
-    staff.push_back(Personnel::createObject("Áîðèñîâ Á.Á.", 2, 5));
+    Personnel** employees = new Personnel * [array];
+    for (int i = 0; i < array; ++i)
+        employees[i] = nullptr;
 
-    int choice;
-    do {
-        cout << "\n               ÌÅÍÞ               " << endl;
-        cout << "1. Äîáàâèòü ñîòðóäíèêà" << endl;
-        cout << "2. Óäàëèòü ñîòðóäíèêà" << endl;
-        cout << "3. Ïîêàçàòü âñåõ ñîòðóäíèêîâ" << endl;
-        cout << "4. Ïîêàçàòü ñ÷åò÷èê ñîçäàííûõ îáúåêòîâ" << endl;
-        cout << "0. Âûõîä\n";
-        choice = ProvInt("Âûáåðèòå äåéñòâèå: ", 0, 4);
+    int factCnt = 0;
+    int choice = -1;
+
+    while (choice != 0) {
+        cout << "\n================ Ð¢Ð•ÐšÐ£Ð©Ð˜Ð™ Ð¡Ð¢ÐÐ¢Ð£Ð¡ ================" << endl;
+        cout << "ÐÐºÑ‚Ð¸Ð²Ð½Ñ‹Ñ… Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð² Ð² ÑÐ¸ÑÑ‚ÐµÐ¼Ðµ (static objectCount): " << Personnel::getObjectCount() << endl;
+        cout << "Ð—Ð°Ð½ÑÑ‚Ð¾ ÑÐ»Ð¾Ñ‚Ð¾Ð² Ð² Ð¼Ð°ÑÑÐ¸Ð²Ðµ: " << factCnt << " Ð¸Ð· " << array << endl;
+        cout << "===================== ÐœÐ•ÐÐ® =====================" << endl;
+        cout << "1. Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ ÑÐ¾Ñ‚Ñ€ÑƒÐ´Ð½Ð¸ÐºÐ° (Ñ‡ÐµÑ€ÐµÐ· ÑÑ‚Ð°Ñ‚Ð¸Ñ‡ÐµÑÐºÐ¸Ð¹ Ð¼ÐµÑ‚Ð¾Ð´)" << endl;
+        cout << "2. Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ ÑÐ¾Ñ‚Ñ€ÑƒÐ´Ð½Ð¸ÐºÐ° (Ñ‡ÐµÑ€ÐµÐ· Ð´Ñ€ÑƒÐ¶ÐµÑÑ‚Ð²ÐµÐ½Ð½ÑƒÑŽ Ñ„ÑƒÐ½ÐºÑ†Ð¸ÑŽ)" << endl;
+        cout << "3. Ð’Ñ‹Ð²ÐµÑÑ‚Ð¸ ÑÐ¿Ð¸ÑÐ¾Ðº Ð²ÑÐµÑ… ÑÐ¾Ñ‚Ñ€ÑƒÐ´Ð½Ð¸ÐºÐ¾Ð²" << endl;
+        cout << "4. Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ ÑÐ¾Ñ‚Ñ€ÑƒÐ´Ð½Ð¸ÐºÐ° Ð¿Ð¾ Ð¸Ð½Ð´ÐµÐºÑÑƒ" << endl;
+        cout << "0. Ð’Ñ‹Ð¹Ñ‚Ð¸ Ð¸Ð· Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼Ñ‹" << endl;
+        cout << "================================================" << endl;
+
+        choice = ProvInt("Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ð´ÐµÐ¹ÑÑ‚Ð²Ð¸Ðµ: ",0,4);
 
         switch (choice) {
         case 1:
-            addEmployee(staff);
-            break;
-        case 2:
-            removeEmployee(staff);
-            break;
-        case 3:
-            printAllEmployees(staff);
-            break;
-        case 4:
-            cout << "\nÒåêóùåå êîëè÷åñòâî æèâûõ îáúåêòîâ: " << Personnel::getObjectCount() << endl;
-            break;
-        case 0:
-            cout << "Çàâåðøåíèå ðàáîòû ïðîãðàììû." << endl;
+        case 2: {
+            if (factCnt >= array) {
+                cout << "\n ÐžÑˆÐ¸Ð±ÐºÐ°: ÐœÐ°ÑÑÐ¸Ð² Ð·Ð°Ð¿Ð¾Ð»Ð½ÐµÐ½! Ð¡Ð½Ð°Ñ‡Ð°Ð»Ð° ÑƒÐ´Ð°Ð»Ð¸Ñ‚Ðµ ÐºÐ¾Ð³Ð¾-Ñ‚Ð¾ Ð¸Ð· ÑÐ¾Ñ‚Ñ€ÑƒÐ´Ð½Ð¸ÐºÐ¾Ð²." << endl;
+                break;
+            }
+
+            char inputName[100];
+            cout << "\nÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¤Ð˜Ðž ÑÐ¾Ñ‚Ñ€ÑƒÐ´Ð½Ð¸ÐºÐ°: ";
+            cin.getline(inputName, 100);
+
+            int inputWorkshop = ProvInt("Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð¾Ð¼ÐµÑ€ Ñ†ÐµÑ…Ð° (0-1000): ",0,1000);
+            int inputRank = ProvInt("Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ñ€Ð°Ð·Ñ€ÑÐ´ (1-6): ", 1,6);
+
+            if (choice == 1) {
+                employees[factCnt] = Personnel::addEmployee(inputName, inputWorkshop, inputRank);
+                cout << " Ð¡Ð¾Ñ‚Ñ€ÑƒÐ´Ð½Ð¸Ðº ÑƒÑÐ¿ÐµÑˆÐ½Ð¾ Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½ Ñ‡ÐµÑ€ÐµÐ· ÑÑ‚Ð°Ñ‚Ð¸Ñ‡ÐµÑÐºÐ¸Ð¹ Ð¼ÐµÑ‚Ð¾Ð´!" << endl;
+            }
+            else {
+                employees[factCnt] = createPersonnelExternal(inputName, inputWorkshop, inputRank);
+                cout << " Ð¡Ð¾Ñ‚Ñ€ÑƒÐ´Ð½Ð¸Ðº ÑƒÑÐ¿ÐµÑˆÐ½Ð¾ Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½ Ñ‡ÐµÑ€ÐµÐ· Ð´Ñ€ÑƒÐ¶ÐµÑÑ‚Ð²ÐµÐ½Ð½ÑƒÑŽ Ñ„ÑƒÐ½ÐºÑ†Ð¸ÑŽ!" << endl;
+            }
+
+            factCnt++;
             break;
         }
-    } while (choice != 0);
 
-    for (auto emp : staff) {
-        Personnel::destroyObject(emp);
+        case 3: {
+            cout << "\n=== Ð¡Ð¿Ð¸ÑÐ¾Ðº ÑÐ¾Ñ‚Ñ€ÑƒÐ´Ð½Ð¸ÐºÐ¾Ð² ===" << endl;
+            if (factCnt == 0) {
+                cout << "Ð¡Ð¿Ð¸ÑÐ¾Ðº Ð¿ÑƒÑÑ‚." << endl;
+            }
+            else {
+                for (int i = 0; i < factCnt; ++i) {
+                    if (employees[i] != nullptr) {
+                        cout << "[" << i + 1 << "] ";
+                        printPersonnelDetails(*employees[i]);
+                    }
+                }
+            }
+            break;
+        }
+
+        case 4: {
+            if (factCnt == 0) {
+                cout << "\n Ð¡Ð¿Ð¸ÑÐ¾Ðº Ð¿ÑƒÑÑ‚, Ð½ÐµÐºÐ¾Ð³Ð¾ ÑƒÐ´Ð°Ð»ÑÑ‚ÑŒ!" << endl;
+                break;
+            }
+
+            cout << "\n=== Ð¡Ð¿Ð¸ÑÐ¾Ðº Ð´Ð»Ñ ÑƒÐ´Ð°Ð»ÐµÐ½Ð¸Ñ ===" << endl;
+            for (int i = 0; i < factCnt; ++i) {
+                if (employees[i] != nullptr) {
+                    cout << "[" << i + 1 << "] ";
+                    printPersonnelDetails(*employees[i]);
+                }
+            }
+
+            int indexToDelete = ProvInt("Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð¾Ð¼ÐµÑ€ ÑÐ¾Ñ‚Ñ€ÑƒÐ´Ð½Ð¸ÐºÐ° Ð´Ð»Ñ ÑƒÐ´Ð°Ð»ÐµÐ½Ð¸Ñ (Ð¾Ñ‚ 1 Ð´Ð¾ " + to_string(factCnt) + "): ", 1, factCnt);
+            indexToDelete--;
+
+            if (indexToDelete >= 0 && indexToDelete < factCnt) {
+                Personnel::removeEmployee(employees[indexToDelete]);
+
+                for (int i = indexToDelete; i < factCnt - 1; ++i) {
+                    employees[i] = employees[i + 1];
+                }
+                employees[factCnt - 1] = nullptr;
+                factCnt--;
+
+                cout << " Ð¡Ð¾Ñ‚Ñ€ÑƒÐ´Ð½Ð¸Ðº ÑƒÑÐ¿ÐµÑˆÐ½Ð¾ ÑƒÐ´Ð°Ð»ÐµÐ½!" << endl;
+            }
+            else {
+                cout << " ÐÐµÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ñ‹Ð¹ Ð½Ð¾Ð¼ÐµÑ€!" << endl;
+            }
+            break;
+        }
+
+        case 0:
+            cout << "\nÐ—Ð°Ð²ÐµÑ€ÑˆÐµÐ½Ð¸Ðµ Ñ€Ð°Ð±Ð¾Ñ‚Ñ‹..." << endl;
+            break;
+
+        default:
+            cout << " ÐÐµÐ²ÐµÑ€Ð½Ñ‹Ð¹ Ð¿ÑƒÐ½ÐºÑ‚ Ð¼ÐµÐ½ÑŽ. ÐŸÐ¾Ð²Ñ‚Ð¾Ñ€Ð¸Ñ‚Ðµ Ð¿Ð¾Ð¿Ñ‹Ñ‚ÐºÑƒ." << endl;
+            break;
+        }
     }
-    staff.clear();
+
+    for (int i = 0; i < factCnt; ++i) {
+        destroyPersonnelExternal(employees[i]);
+    delete[] employees;
+
+    cout << "ÐŸÐ°Ð¼ÑÑ‚ÑŒ Ð¿Ð¾Ð»Ð½Ð¾ÑÑ‚ÑŒÑŽ Ð¾Ñ‡Ð¸Ñ‰ÐµÐ½Ð°." << endl;
+    cout << "Ð˜Ñ‚Ð¾Ð³Ð¾Ð²Ð¾Ðµ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð² Ð² ÑÐ¸ÑÑ‚ÐµÐ¼Ðµ: " << Personnel::getObjectCount() << endl;
 
     return 0;
 }
